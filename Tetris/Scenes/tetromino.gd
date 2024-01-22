@@ -50,9 +50,9 @@ func _on_timer_timeout():
 	
 	# Wtf
 	if position_x_rounded % grid_space != 0:
-		body.position.x = get_closest_multiple(position_x_rounded, grid_space) + (grid_space * -sign(position_x_rounded))
+		body.position.x = get_closest_multiple(position_x_rounded, grid_space)
 	elif position_y_rounded % grid_space != 0:
-		body.position.y = get_closest_multiple(position_y_rounded, grid_space) + (grid_space * -sign(position_y_rounded))
+		body.position.y = get_closest_multiple(position_y_rounded, grid_space)
 	
 	if collision:
 		if collision.get_collider().is_in_group("Tetromino") or collision.get_collider().is_in_group("Ground"):
@@ -60,5 +60,5 @@ func _on_timer_timeout():
 			landed.emit()
 
 func get_closest_multiple(n: int, x: int) -> int:
-	# https://math.stackexchange.com/a/291494
-	return ((n-1)|x-1)+1
+	# https://math.stackexchange.com/a/3056363
+	return n if x == 0 else floori( ( n / x ) + 0.5 ) * x
