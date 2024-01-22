@@ -38,10 +38,10 @@ func _on_timer_timeout():
 	var velocity_x = Input.get_axis("move_left", "move_right")
 	
 	if velocity_x:
-		body.velocity.x = body.velocity.x + velocity_x * move_speed
+		body.velocity.x = velocity_x * move_speed
 	else:
 		# Move down
-		body.velocity.y = body.velocity.y + actual_fall_speed
+		body.velocity.y = actual_fall_speed
 	
 	var collision = body.move_and_collide(body.velocity)
 	
