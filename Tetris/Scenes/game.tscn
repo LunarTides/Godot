@@ -1,0 +1,102 @@
+[gd_scene load_steps=16 format=3 uid="uid://w7oi5hxorpsr"]
+
+[ext_resource type="Script" path="res://Scenes/game.gd" id="1_hhlqb"]
+[ext_resource type="PackedScene" uid="uid://dwcg4gtvqagos" path="res://Scenes/tetromino.tscn" id="1_qii8e"]
+[ext_resource type="Texture2D" uid="uid://cwhvdnmvvbdtt" path="res://Sprites/Tetromino/line.svg" id="3_0sdce"]
+[ext_resource type="Texture2D" uid="uid://bawlewme1tdnt" path="res://Sprites/Tetromino/l.svg" id="4_esgif"]
+[ext_resource type="PackedScene" uid="uid://cj4031bixun2a" path="res://Scenes/Tetromino/block.tscn" id="5_i5fr0"]
+[ext_resource type="PackedScene" uid="uid://bpxniw0ukuuqw" path="res://Scenes/Tetromino/t.tscn" id="6_jutk1"]
+[ext_resource type="PackedScene" uid="uid://cw3vdltodji3e" path="res://Scenes/Tetromino/long-l.tscn" id="7_47jmh"]
+[ext_resource type="PackedScene" uid="uid://dhlel83ogotny" path="res://Scenes/Tetromino/snake.tscn" id="8_svfmw"]
+[ext_resource type="Texture2D" uid="uid://dk4xtltfljdg8" path="res://Sprites/background.svg" id="9_637kr"]
+[ext_resource type="Texture2D" uid="uid://dbrp3gni7khna" path="res://Sprites/Tetromino/block.svg" id="10_qlqdi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_718dd"]
+size = Vector2(14, 62)
+
+[sub_resource type="PackedScene" id="PackedScene_6bof1"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"names": PackedStringArray("Line", "collision_mask", "Tetromino", "CharacterBody2D", "Sprite", "texture", "Sprite2D", "Collision", "position", "shape", "CollisionShape2D"),
+"node_count": 3,
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 3, 0, -1, 1, 1, 0, 1, 2, 0, 0, 6, 4, -1, 1, 5, 1, 0, 0, 0, 10, 7, -1, 2, 8, 2, 9, 3, 0),
+"variants": [3, ExtResource("3_0sdce"), Vector2(-24, 0), SubResource("RectangleShape2D_718dd")],
+"version": 3
+}
+
+[sub_resource type="PackedScene" id="PackedScene_y1svi"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"names": PackedStringArray("L", "collision_mask", "metadata/_edit_group_", "Tetromino", "CharacterBody2D", "Sprite", "texture", "Sprite2D", "Collision", "polygon", "CollisionPolygon2D"),
+"node_count": 3,
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 4, 0, -1, 2, 1, 0, 2, 1, 1, 3, 0, 0, 7, 5, -1, 1, 6, 2, 0, 0, 0, 10, 8, -1, 1, 9, 3, 0),
+"variants": [3, true, ExtResource("4_esgif"), PackedVector2Array(-31, -31, -31, -1, -1, -1, -1, -15, -17, -15, -17, -31)],
+"version": 3
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yyoit"]
+size = Vector2(480, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hf614"]
+size = Vector2(352, 16)
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_hhlqb")
+tetromino_scene = ExtResource("1_qii8e")
+tetromino_shapes = Array[PackedScene]([SubResource("PackedScene_6bof1"), SubResource("PackedScene_y1svi"), ExtResource("5_i5fr0"), ExtResource("6_jutk1"), ExtResource("7_47jmh"), ExtResource("8_svfmw")])
+
+[node name="Background" type="TextureRect" parent="."]
+offset_right = 352.0
+offset_bottom = 480.0
+texture = ExtResource("9_637kr")
+
+[node name="NextShape" type="TextureRect" parent="."]
+offset_left = 272.0
+offset_top = 16.0
+offset_right = 352.0
+offset_bottom = 103.0
+texture = ExtResource("10_qlqdi")
+
+[node name="LeftWall" type="StaticBody2D" parent="."]
+position = Vector2(0, 128)
+rotation = 1.5708
+collision_layer = 2
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+position = Vector2(112, 8.00001)
+shape = SubResource("RectangleShape2D_yyoit")
+
+[node name="RightWall" type="StaticBody2D" parent="."]
+position = Vector2(368, 128)
+rotation = 1.5708
+collision_layer = 2
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+position = Vector2(112, 8)
+shape = SubResource("RectangleShape2D_yyoit")
+
+[node name="Ground" type="StaticBody2D" parent="." groups=["Ground"]]
+position = Vector2(0, 480)
+collision_layer = 2
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+position = Vector2(176, -8)
+shape = SubResource("RectangleShape2D_hf614")
+
+[node name="Ceiling" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ceiling"]
+position = Vector2(176, -8)
+shape = SubResource("RectangleShape2D_hf614")
+
+[connection signal="body_entered" from="Ceiling" to="." method="_on_ceiling_body_entered"]

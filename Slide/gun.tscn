@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://bigxu6beu8qxd"]
+
+[ext_resource type="Texture2D" uid="uid://dv1hloton2sci" path="res://icon.svg" id="1_20wuy"]
+[ext_resource type="Script" path="res://gun.gd" id="1_fttyg"]
+[ext_resource type="PackedScene" uid="uid://bbtihc5l1t2g3" path="res://bullet.tscn" id="2_nlclx"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_a5bag"]
+size = Vector2(10, 10)
+
+[node name="Gun" type="Node2D"]
+script = ExtResource("1_fttyg")
+bullet_scene = ExtResource("2_nlclx")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+rotation = -3.14159
+mesh = SubResource("QuadMesh_a5bag")
+texture = ExtResource("1_20wuy")

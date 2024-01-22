@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cw3vdltodji3e"]
+
+[ext_resource type="Texture2D" uid="uid://d3coymn3gpvc3" path="res://Sprites/Tetromino/long-l.svg" id="1_huwv5"]
+
+[node name="Long-L" type="CharacterBody2D" groups=["Tetromino"]]
+collision_mask = 3
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_huwv5")
+
+[node name="Collision" type="CollisionPolygon2D" parent="."]
+position = Vector2(-16, -16)
+polygon = PackedVector2Array(-15, -15, -15, 31, 15, 31, 15, 17, -1, 17, -1, -15)

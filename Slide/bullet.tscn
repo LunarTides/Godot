@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://bbtihc5l1t2g3"]
+
+[ext_resource type="Texture2D" uid="uid://dv1hloton2sci" path="res://icon.svg" id="1_75of8"]
+[ext_resource type="Script" path="res://bullet.gd" id="1_ig4dg"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_23juj"]
+size = Vector2(5, 5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1kd7t"]
+size = Vector2(5, 5)
+
+[node name="Bullet" type="CharacterBody2D" groups=["bullets"]]
+collision_layer = 8
+collision_mask = 6
+script = ExtResource("1_ig4dg")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+rotation = -3.14159
+mesh = SubResource("QuadMesh_23juj")
+texture = ExtResource("1_75of8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1kd7t")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(7, 7)
+rect = Rect2(-10, -10, 6, 6)
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

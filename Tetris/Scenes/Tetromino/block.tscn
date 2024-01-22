@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cj4031bixun2a"]
+
+[ext_resource type="Texture2D" uid="uid://dbrp3gni7khna" path="res://Sprites/Tetromino/block.svg" id="1_7dj8g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gql65"]
+size = Vector2(30, 30)
+
+[node name="Block" type="CharacterBody2D" groups=["Tetromino"]]
+collision_mask = 3
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_7dj8g")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(-16, -16)
+shape = SubResource("RectangleShape2D_gql65")

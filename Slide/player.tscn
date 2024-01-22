@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://dr8svu1aldlab"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_lcqaa"]
+[ext_resource type="Texture2D" uid="uid://dv1hloton2sci" path="res://icon.svg" id="1_p1pfw"]
+[ext_resource type="PackedScene" uid="uid://bigxu6beu8qxd" path="res://gun.tscn" id="3_5ryqo"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ukvss"]
+radius = 10.0
+height = 30.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0mgv1"]
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 7
+script = ExtResource("1_lcqaa")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+rotation = 3.14159
+mesh = SubResource("CapsuleMesh_ukvss")
+texture = ExtResource("1_p1pfw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_0mgv1")
+
+[node name="Gun" parent="." instance=ExtResource("3_5ryqo")]
+position = Vector2(5, 5)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="recoil" from="Gun" to="." method="recoil"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

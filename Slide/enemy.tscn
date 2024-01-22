@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://d0dbjlnk1rn6a"]
+
+[ext_resource type="Texture2D" uid="uid://dv1hloton2sci" path="res://icon.svg" id="1_ehu23"]
+[ext_resource type="Script" path="res://enemy.gd" id="1_hel8g"]
+[ext_resource type="Shader" path="res://enemy.gdshader" id="2_x1p4d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bd5un"]
+size = Vector2(65, 65)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u1ppk"]
+shader = ExtResource("2_x1p4d")
+shader_parameter/red = 1.0
+
+[node name="Enemy" type="Area2D" groups=["enemies"]]
+collision_layer = 2
+collision_mask = 9
+script = ExtResource("1_hel8g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_bd5un")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_u1ppk")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_ehu23")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
