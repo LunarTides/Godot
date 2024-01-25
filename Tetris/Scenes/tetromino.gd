@@ -12,10 +12,10 @@ var can_control = true
 signal landed
 
 func _physics_process(delta):
-	# Cant use Input.getAxis since that updates the rotation every frame
 	if not can_control:
 		return
-		
+	
+	# Cant use Input.getAxis since that updates the rotation every frame
 	if Input.is_action_just_pressed("rotate_left"):
 		body.rotate(deg_to_rad(-90))
 	elif Input.is_action_just_pressed("rotate_right"):
