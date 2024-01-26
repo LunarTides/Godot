@@ -1,0 +1,12 @@
+[submodule "Hearthstone.gd"]
+	path = Hearthstone.gd
+	url = https://github.com/LunarTides/Hearthstone.gd
+[submodule "ToS"]
+	path = ToS
+	url = https://github.com/LunarTides/ToS
+[submodule "Vampire-Survivors"]
+	path = Vampire-Survivors
+	url = https://github.com/LunarTides/Vampire-Survivors
+[submodule "whud"]
+	path = whud
+	url = https://github.com/LunarTides/whud
