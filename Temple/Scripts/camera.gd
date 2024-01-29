@@ -18,9 +18,8 @@ func shake(depth, amount, times, timer):
 	
 	is_shaking = true
 	
-	# Move the camera  a little bit to the right, then move it a little to the left.
 	# Repeat until depth = shake_times
-	var amount_to_shake = (amount if depth & 1 == 0 else -amount) * randi_range(1, 2)
+	var amount_to_shake = (amount if depth & 1 == 0 else -amount) * randi_range(1, 1 + (depth / 10))
 	
 	offset += Vector2(amount_to_shake * [1, -1].pick_random(), amount_to_shake * [1, -1].pick_random())
 	get_tree().create_timer(timer).timeout.connect(func(): shake(depth + 1, amount, times, timer))

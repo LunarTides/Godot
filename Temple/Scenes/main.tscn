@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://budheobgcq71i"]
+[gd_scene load_steps=16 format=3 uid="uid://budheobgcq71i"]
 
 [ext_resource type="Script" path="res://Scripts/camera.gd" id="1_7o2pj"]
 [ext_resource type="Texture2D" uid="uid://y6p2am3elrtu" path="res://Sprites/tilemap.svg" id="1_uklus"]
@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://b3n6id4eckl4b" path="res://Sprites/tower.svg" id="3_di1wj"]
 [ext_resource type="Script" path="res://Scripts/gravestone.gd" id="4_13wml"]
 [ext_resource type="Texture2D" uid="uid://4yxlr2lkn33p" path="res://Sprites/gravestone.svg" id="4_iknc6"]
-[ext_resource type="Shader" path="res://Shaders/rect_to_tri.gdshader" id="6_iyx4i"]
 [ext_resource type="AudioStream" uid="uid://dopx2h34cjv2n" path="res://SFX/tombstone.wav" id="6_rmt5j"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_g2d0h"]
@@ -41,9 +40,15 @@ color = Color(0.972549, 0.537255, 0.145098, 1)
 hue_variation_min = -0.08
 hue_variation_max = 0.23
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_n7md5"]
-shader = ExtResource("6_iyx4i")
-shader_parameter/offset = -0.38
+[sub_resource type="PrismMesh" id="PrismMesh_342vl"]
+lightmap_size_hint = Vector2i(14, 21)
+
+[sub_resource type="Gradient" id="Gradient_elqaa"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 1, 0.603922, 0.152941)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_h8lpi"]
+gradient = SubResource("Gradient_elqaa")
 
 [node name="Main" type="Node2D"]
 
@@ -134,14 +139,6 @@ explosiveness = 1.0
 randomness = 1.0
 local_coords = true
 
-[node name="Light" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_n7md5")
-offset_left = 448.0
-offset_top = -316.0
-offset_right = 654.0
-offset_bottom = 336.0
-color = Color(1, 1, 0.603922, 0.501961)
-
 [node name="GravestoneButton" type="Button" parent="."]
 offset_left = 528.0
 offset_top = 272.0
@@ -150,6 +147,25 @@ offset_bottom = 336.0
 focus_mode = 0
 action_mode = 0
 flat = true
+
+[node name="Light" type="MeshInstance2D" parent="."]
+position = Vector2(552, 128)
+rotation = 3.14159
+scale = Vector2(208, 416)
+mesh = SubResource("PrismMesh_342vl")
+texture = SubResource("GradientTexture1D_h8lpi")
+
+[node name="Secrets" type="Node2D" parent="."]
+
+[node name="God" type="Sprite2D" parent="Secrets"]
+position = Vector2(522.999, -107.526)
+rotation = 1.57407
+scale = Vector2(3.51219, 2.91264)
+texture = ExtResource("2_fyk1l")
+
+[node name="Tilemap" type="Sprite2D" parent="Secrets"]
+position = Vector2(-315, 899)
+texture = ExtResource("1_uklus")
 
 [connection signal="shake" from="Gravestone" to="Camera" method="_on_gravestone_shake"]
 [connection signal="button_down" from="GravestoneButton" to="Gravestone" method="_on_button_button_down"]
