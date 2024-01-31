@@ -1,0 +1,102 @@
+[gd_scene load_steps=7 format=3 uid="uid://w4pu6mbtk0k3"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_qiqo7"]
+[ext_resource type="PackedScene" uid="uid://cryksa4rryt20" path="res://scenes/ball.tscn" id="1_vyq3y"]
+[ext_resource type="PackedScene" uid="uid://5kxtiqtwsk0r" path="res://scenes/paddle.tscn" id="3_ao0it"]
+[ext_resource type="PackedScene" uid="uid://ccce6lvmu71du" path="res://scenes/ui.tscn" id="4_kdm5q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ghqsm"]
+size = Vector2(1173, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ry2yk"]
+size = Vector2(16, 768)
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("ball", "left_paddle", "right_paddle", "player1_paddles", "player2_paddles", "player1_wall", "player2_wall")]
+script = ExtResource("1_qiqo7")
+ball = NodePath("Ball")
+left_paddle = NodePath("LeftPaddle")
+right_paddle = NodePath("RightPaddle")
+player1_paddles = [NodePath("LeftPaddle"), NodePath("LeftPaddleGhost")]
+player2_paddles = [NodePath("RightPaddle"), NodePath("RightPaddleGhost")]
+player1_wall = NodePath("LeftWall")
+player2_wall = NodePath("RightWall")
+
+[node name="UI" parent="." instance=ExtResource("4_kdm5q")]
+top_level = true
+
+[node name="Ball" parent="." node_paths=PackedStringArray("bounce_up", "bounce_sideways") instance=ExtResource("1_vyq3y")]
+position = Vector2(522, 169)
+collision_layer = 8
+collision_mask = 7
+speed = 200
+bounce_up = [NodePath("../Ground"), NodePath("../Floor")]
+bounce_sideways = [NodePath("../LeftPaddle"), NodePath("../RightPaddle"), NodePath("../LeftWall"), NodePath("../RightWall"), NodePath("../LeftPaddleGhost"), NodePath("../RightPaddleGhost")]
+
+[node name="LeftPaddle" parent="." instance=ExtResource("3_ao0it")]
+collision_mask = 11
+can_control = true
+player1 = true
+
+[node name="LeftPaddleGhost" parent="." instance=ExtResource("3_ao0it")]
+modulate = Color(1, 1, 1, 0.501961)
+z_index = -1
+collision_layer = 4
+collision_mask = 10
+can_control = true
+player1 = true
+
+[node name="RightPaddle" parent="." instance=ExtResource("3_ao0it")]
+position = Vector2(32, 0)
+collision_mask = 11
+can_control = true
+
+[node name="RightPaddleGhost" parent="." instance=ExtResource("3_ao0it")]
+modulate = Color(1, 1, 1, 0.501961)
+z_index = -1
+position = Vector2(32, 0)
+collision_layer = 4
+collision_mask = 10
+can_control = true
+
+[node name="Ground" type="StaticBody2D" parent="."]
+position = Vector2(568, -8)
+collision_layer = 2
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+shape = SubResource("RectangleShape2D_ghqsm")
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(568, 656)
+collision_layer = 2
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("RectangleShape2D_ghqsm")
+
+[node name="LeftWall" type="StaticBody2D" parent="."]
+position = Vector2(-8, 344)
+collision_layer = 2
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+shape = SubResource("RectangleShape2D_ry2yk")
+
+[node name="RightWall" type="StaticBody2D" parent="."]
+position = Vector2(1160, 360)
+collision_layer = 2
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+shape = SubResource("RectangleShape2D_ry2yk")
+
+[node name="HitCooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="PointsCooldown" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[connection signal="collided" from="Ball" to="." method="_on_ball_collided"]
+[connection signal="timeout" from="HitCooldown" to="." method="_on_hit_cooldown_timeout"]
+[connection signal="timeout" from="PointsCooldown" to="." method="_on_points_cooldown_timeout"]

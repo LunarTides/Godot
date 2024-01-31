@@ -1,0 +1,58 @@
+[gd_scene load_steps=2 format=3 uid="uid://ccce6lvmu71du"]
+
+[ext_resource type="Script" path="res://scripts/ui.gd" id="1_8liad"]
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8liad")
+
+[node name="Points" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Player1" type="Label" parent="Points"]
+layout_mode = 1
+offset_right = 79.0
+offset_bottom = 23.0
+text = "Points: 0"
+
+[node name="Player2" type="Label" parent="Points"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 1033.0
+offset_right = 1112.0
+offset_bottom = 23.0
+grow_horizontal = 0
+text = "Points: 0"
+
+[node name="Health" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Player1" type="Label" parent="Health"]
+layout_mode = 0
+offset_top = 24.0
+offset_right = 79.0
+offset_bottom = 47.0
+text = "Health: 0"
+
+[node name="Player2" type="Label" parent="Health"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 1032.0
+offset_top = 24.0
+offset_right = 1111.0
+offset_bottom = 47.0
+grow_horizontal = 0
+text = "Health: 0"

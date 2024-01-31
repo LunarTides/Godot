@@ -1,16 +1,16 @@
 === Small games ===
-Pong
-Brick Breaker
-Sleeping / Dreaming (Small)
+(*) Pong
+( ) Brick Breaker
+( ) Sleeping / Dreaming (Small)
 ===================
 
 === Big games (No order) ===
-SCP Game
-Horror Game
-Multiplayer FPS
-Platforming game Level Editor
-Outer Wilds / Solar System Simulation
-God Game
-Sleeping / Dreaming (Big)
-Metroidvania
+( ) SCP Game
+( ) Horror Game
+( ) Multiplayer FPS
+( ) Platforming game Level Editor
+( ) Outer Wilds / Solar System Simulation
+( ) God Game
+( ) Sleeping / Dreaming (Big)
+( ) Metroidvania
 =================
