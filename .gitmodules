@@ -10,3 +10,6 @@
 [submodule "whud"]
 	path = whud
 	url = https://github.com/LunarTides/whud
+[submodule "God-Game"]
+	path = God-Game
+	url = https://github.com/LunarTides/God-Game
