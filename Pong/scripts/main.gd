@@ -19,21 +19,18 @@ var can_gain_points = true
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Move the ball and paddles to the right place
-	ball.position = screen_size / 2
+	set_positions()
 	
-	left_paddle.position.x = 8
-	left_paddle.position.y = screen_size.y / 2
-	
-	right_paddle.position.x = screen_size.x - 8
-	right_paddle.position.y = screen_size.y / 2
-	
-	$LeftPaddleGhost.position = left_paddle.position
-	$RightPaddleGhost.position = right_paddle.position
+	Game.reset_game.connect(set_positions)
 
 func _process(_delta):
 	# Keep the ghosts at the correct x position so they won't be moved by the ball riding glitch, but they can still bounce the ball
 	$LeftPaddleGhost.position.x = 8
 	$RightPaddleGhost.position.x = screen_size.x - 8
+
+func _unhandled_key_input(event):
+	if event.is_action_pressed("reset"):
+		Game.reset()
 
 func _on_ball_collided(collider: Object):
 	if collider == player1_wall:
@@ -45,6 +42,21 @@ func _on_ball_collided(collider: Object):
 			add_points(1, 1)
 		elif collider in player2_paddles:
 			add_points(2, 1)
+
+func set_positions():
+	ball.velocity = Vector2.ONE
+	ball.position = screen_size / 2
+	
+	left_paddle.velocity = Vector2.ZERO
+	left_paddle.position.x = 8
+	left_paddle.position.y = screen_size.y / 2
+	
+	right_paddle.velocity = Vector2.ZERO
+	right_paddle.position.x = screen_size.x - 8
+	right_paddle.position.y = screen_size.y / 2
+	
+	$LeftPaddleGhost.position = left_paddle.position
+	$RightPaddleGhost.position = right_paddle.position
 
 func dmg(player_id: int, amount: int):
 	if not can_be_hit:

@@ -22,8 +22,6 @@ func _physics_process(_delta):
 		var collision = get_slide_collision(i)
 		var collider = collision.get_collider()
 		
-		print_verbose("Collided with: ", collider.name)
-		
 		if collider in bounce_up:
 			velocity.y = -velocity.y
 		if collider in bounce_sideways:
