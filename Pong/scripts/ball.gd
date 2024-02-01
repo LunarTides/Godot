@@ -8,19 +8,19 @@ extends CharacterBody2D
 signal collided(collider: Object)
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	velocity = Vector2.ONE * speed
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(_delta):
+func _physics_process(_delta: float) -> void:
 	velocity.x = speed * sign(velocity.x)
 	velocity.y = speed * sign(velocity.y)
 	
 	move_and_slide()
 
 	for i in get_slide_collision_count():
-		var collision = get_slide_collision(i)
-		var collider = collision.get_collider()
+		var collision := get_slide_collision(i)
+		var collider := collision.get_collider()
 		
 		if collider in bounce_up:
 			velocity.y = -velocity.y
@@ -28,7 +28,7 @@ func _physics_process(_delta):
 			velocity.x = -velocity.x
 		
 		# Idk why we have to do this, but if we dont, the ball will get stuck to the floor.
-		velocity.x += randi_range(0, round(speed / 2))
-		velocity.y += randi_range(0, round(speed / 2))
+		velocity.x += randi_range(0, speed / 2)
+		velocity.y += randi_range(0, speed / 2)
 		
 		collided.emit(collider)

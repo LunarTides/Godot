@@ -5,12 +5,12 @@ extends CharacterBody2D
 
 @export var player1: bool = false
 
-func _physics_process(_delta):
+func _physics_process(_delta: float) -> void:
 	if not can_control:
 		return
 	
 	# Get the input direction and handle the movement/deceleration.
-	var direction = Input.get_axis("player1_up" if player1 else "player2_up", "player1_down" if player1 else "player2_down")
+	var direction := Input.get_axis("player1_up" if player1 else "player2_up", "player1_down" if player1 else "player2_down")
 	if direction:
 		velocity.y = direction * speed
 	else:

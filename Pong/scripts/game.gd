@@ -5,7 +5,7 @@ signal gained_points(player_id: int, amount: int)
 signal reset_game
 
 # Player 1 has 3 health, player 2 has 3 health
-var players = {
+var players: Dictionary = {
 	1: {
 		"health": 3,
 		"points": 0
@@ -16,21 +16,20 @@ var players = {
 	}
 }
 
-func _ready():
-	reset()
+func _ready() -> void:
 	load_save()
 	
-func _notification(what):
+func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		save()
 
-func add_points(player_id: int, amount: int):
+func add_points(player_id: int, amount: int) -> void:
 	players[player_id].points += amount
 	print("Player %s's points: %s" % [player_id, players[player_id].points])
 	
 	gained_points.emit(player_id, amount)
 
-func dmg(player_id: int, amount: int):
+func dmg(player_id: int, amount: int) -> void:
 	players[player_id].health -= amount
 	print("Player %s's health: %s" % [player_id, players[player_id].health])
 	
@@ -42,7 +41,7 @@ func dmg(player_id: int, amount: int):
 		delete_save()
 		reset()
 
-func reset():
+func reset() -> void:
 	players = {
 		1: {
 			"health": 3,
@@ -58,9 +57,9 @@ func reset():
 	
 	print("Reset game")
 
-func save():
+func save() -> void:
 	# Save the game
-	var config := ConfigFile.new()
+	var config: ConfigFile = ConfigFile.new()
 	
 	config.set_value("player1", "health", players[1].health)
 	config.set_value("player1", "points", players[1].points)
@@ -72,8 +71,8 @@ func save():
 	
 	print("Saved game")
 
-func load_save():
-	var config := ConfigFile.new()
+func load_save() -> void:
+	var config: ConfigFile = ConfigFile.new()
 	config.load("user://savegame.ini")
 	
 	players[1].health = config.get_value("player1", "health", 3)
@@ -84,6 +83,6 @@ func load_save():
 	
 	print("Loaded game")
 
-func delete_save():
-	var dir = DirAccess.open("user://")
+func delete_save() -> void:
+	var dir: DirAccess = DirAccess.open("user://")
 	dir.remove("savegame.ini")
